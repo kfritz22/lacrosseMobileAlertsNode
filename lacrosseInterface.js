@@ -38,22 +38,24 @@ async function readSensorData(sensorId, timezone, metric) {
     }
 
     var sensorData = JSON.parse(res.data.toString())
+    sensorInfo = sensorData.device0
+    sensorObs = sensorInfo.obs[0]
 
     try {
 
       deviceData =
       {
-        ambientTemperature: sensorData.device0.obs[0].ambient_temp,
-        humidity: sensorData.device0.obs[0].humidity,
-        probeTemperature: sensorData.device0.obs[0].probe_temp,
-        linkQuality: sensorData.device0.obs[0].linkquality,
-        lowBattery: (sensorData.device0.obs[0].lowbattery === "1") ? true : false,
-        timestamp: sensorData.device0.obs[0].timestamp,
-        deviceType: sensorData.device0.device_type,
-        ambientTemperatureUnit: sensorData.device0.unit.temp,
-        probeTemperatureUnit: sensorData.device0.unit.temp2,
-        humidityUnit: sensorData.device0.unit.rh,
-        valid: (sensorData.device0.success) ? true : false,
+        ambientTemperature: sensorObs.ambient_temp,
+        humidity: sensorObs.humidity,
+        probeTemperature: sensorObs.probe_temp,
+        linkQuality: sensorObs.linkquality,
+        lowBattery: (sensorObs.lowbattery === "1") ? true : false,
+        timestamp: sensorObs.timestamp,
+        deviceType: sensorInfo.device_type,
+        ambientTemperatureUnit: sensorInfo.unit.temp,
+        probeTemperatureUnit: sensorInfo.unit.temp2,
+        humidityUnit: sensorInfo.unit.rh,
+        valid: (sensorInfo.success) ? true : false,
       }
 
     }
